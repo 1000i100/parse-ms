@@ -73,10 +73,10 @@ export default function parseMilliseconds(milliseconds, options = {}) {
 	}
 
 	let intPower = 0;
-	while (!Number.isInteger(milliseconds)) {
-		milliseconds *= 10;
+	while (!Number.isInteger(milliseconds*10**intPower)) {
 		intPower++;
 	}
+	milliseconds*=10**intPower
 
 	const result = {};
 	let convertToThisUnit = false;
