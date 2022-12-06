@@ -43,7 +43,7 @@ testParseMilliseconds((1000 * 60) + 500 + 0.345_678, {
 	nanoseconds: 678,
 });
 test('split days in bigger units if asked', t => {
-	t.deepEqual(parseMilliseconds(1000 * 60 * 60 * 999, 'millennia'), {...zeroFullReference,
+	t.deepEqual(parseMilliseconds(1000 * 60 * 60 * 999, {upToUnit: 'millennia'}), {...zeroFullReference,
 		months: 1,
 		weeks: 1,
 		days: 4,
@@ -52,22 +52,22 @@ test('split days in bigger units if asked', t => {
 	});
 });
 test('up and down unit can be given in short format and so for output', t => {
-	t.deepEqual(parseMilliseconds(0.123_456_789, 's', 's', 'short'), {s: 0});
-	t.deepEqual(parseMilliseconds(999, 's', 's', 'both'), {s: 1, seconds: 1});
+	t.deepEqual(parseMilliseconds(0.123_456_789, {upToUnit: 's', downToUnit: 's', outputFormat: 'short'}), {s: 0});
+	t.deepEqual(parseMilliseconds(999, {upToUnit: 's', downToUnit: 's', outputFormat: 'both'}), {s: 1, seconds: 1});
 });
 test('round smaller units if asked', t => {
-	t.deepEqual(parseMilliseconds(0.123_456_789, 's', 's'), {seconds: 0});
-	t.deepEqual(parseMilliseconds(999, 's', 's'), {seconds: 1});
+	t.deepEqual(parseMilliseconds(0.123_456_789, {upToUnit: 's', downToUnit: 's'}), {seconds: 0});
+	t.deepEqual(parseMilliseconds(999, {upToUnit: 's', downToUnit: 's'}), {seconds: 1});
 });
 test('go deeper in small units if asked', t => {
-	t.deepEqual(parseMilliseconds(0.123_456_789, 'millennia', 'picoseconds'),
+	t.deepEqual(parseMilliseconds(0.123_456_789, {upToUnit: 'millennia', downToUnit: 'picoseconds'}),
 		{...zeroFullReference, microseconds: 123, nanoseconds: 456, picoseconds: 789});
 });
 test('throw when bad input', t => {
 	t.throws(() => parseMilliseconds('a string'));
-	t.throws(() => parseMilliseconds(42, 'unknown unit'));
-	t.throws(() => parseMilliseconds(42, 's', ''));
-	t.throws(() => parseMilliseconds(42, 's', 's', 'nop'));
+	t.throws(() => parseMilliseconds(42, {upToUnit: 'unknown unit'}));
+	t.throws(() => parseMilliseconds(42, {upToUnit: 's', downToUnit: 'plop'}));
+	t.throws(() => parseMilliseconds(42, {upToUnit: 's', downToUnit: 's', outputFormat: 'nop'}));
 });
 
 test('handle negative millisecond values', t => {

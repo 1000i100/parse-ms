@@ -14,28 +14,28 @@ export type TimeComponentsLong = {
 	picoseconds?: number;
 };
 export type TimeComponentsShort = {
-  ky?: number;
-  c?: number;
-  Y?: number;
-  M?: number;
-  W?: number;
-  D?: number;
-  h?: number;
-  m?: number;
-  s?: number;
-  ms?: number;
-  µs?: number;
-  ns?: number;
-  ps?: number;
+	ky?: number;
+	c?: number;
+	Y?: number;
+	M?: number;
+	W?: number;
+	D?: number;
+	h?: number;
+	m?: number;
+	s?: number;
+	ms?: number;
+	µs?: number;
+	ns?: number;
+	ps?: number;
 };
-export type TimeComponents = Merge<TimeComponentsShort|TimeComponentsLong>;
+export type TimeComponents = Merge<TimeComponentsShort | TimeComponentsLong>;
 
 // https://dev.to/lucianbc/union-type-merging-in-typescript-9al
-type Merge<T extends object> = {
-  [k in AllKeys<T>]: PickType<T, k>;
+type Merge<T extends Record<string, unknown>> = {
+	[k in AllKeys<T>]: PickType<T, k>;
 };
 type AllKeys<T> = T extends any ? keyof T : never;
-type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: any }
+type PickType<T, K extends AllKeys<T>> = T extends {[k in K]?: any}
 	? T[K]
 	: undefined;
 
@@ -58,37 +58,37 @@ parseMilliseconds(1337000001);
 // }
 ```
  */
-export default function parseMilliseconds(milliseconds: number, options?: parseMillisecondsOptions): TimeComponents;
-export type parseMillisecondsOptions = {
-  upToUnit?: TimeUnits;// keyof typeof TimeUnits;
-  downToUnit?: TimeUnits;
-  outputFormat?: 'short' | 'long' | 'both';
+export default function parseMilliseconds(milliseconds: number, options?: ParseMillisecondsOptions): TimeComponents;
+export type ParseMillisecondsOptions = {
+	upToUnit?: TimeUnits;// Keyof typeof TimeUnits;
+	downToUnit?: TimeUnits;
+	outputFormat?: 'short' | 'long' | 'both';
 };
 export enum TimeUnits {
-  millennia = "millennia",
-  centuries = "centuries",
-  years = "years",
-  months = "months",
-  weeks = "weeks",
-  days = "days",
-  hours = "hours",
-  minutes = "minutes",
-  seconds = "seconds",
-  milliseconds = "milliseconds",
-  microseconds = "microseconds",
-  nanoseconds = "nanoseconds",
-  picoseconds = "picoseconds",
-  ky = "ky",
-  c = "c",
-  Y = "Y",
-  M = "M",
-  W = "W",
-  D = "D",
-  h = "h",
-  m = "m",
-  s = "s",
-  ms = "ms",
-  µs = "µs",
-  ns = "ns",
-  ps = "ps",
+	millennia = 'millennia',
+	centuries = 'centuries',
+	years = 'years',
+	months = 'months',
+	weeks = 'weeks',
+	days = 'days',
+	hours = 'hours',
+	minutes = 'minutes',
+	seconds = 'seconds',
+	milliseconds = 'milliseconds',
+	microseconds = 'microseconds',
+	nanoseconds = 'nanoseconds',
+	picoseconds = 'picoseconds',
+	ky = 'ky',
+	c = 'c',
+	Y = 'Y',
+	M = 'M',
+	W = 'W',
+	D = 'D',
+	h = 'h',
+	m = 'm',
+	s = 's',
+	ms = 'ms',
+	µs = 'µs',
+	ns = 'ns',
+	ps = 'ps',
 }

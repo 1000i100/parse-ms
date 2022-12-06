@@ -43,21 +43,33 @@ for (const f of factors) {
 	toShortUnit[f.shortUnit] = f.shortUnit;
 }
 
-export default function parseMilliseconds(milliseconds, upToUnit = 'days', downToUnit = 'nanoseconds', outputFormat = 'long') {
+export default function parseMilliseconds(milliseconds, options = {}) {
 	if (typeof milliseconds !== 'number') {
 		throw new TypeError(`Expected a number, received : ${milliseconds}`);
 	}
 
-	if (toLongUnit[upToUnit]) {
-		upToUnit = toLongUnit[upToUnit];
-	} else {
-		throw new TypeError(`Unknown unit : ${upToUnit} (known : ${toLongUnit.join(', ')}`);
+	if (!options.upToUnit) {
+		options.upToUnit = 'days';
 	}
 
-	if (toLongUnit[downToUnit]) {
-		downToUnit = toLongUnit[downToUnit];
+	if (!options.downToUnit) {
+		options.downToUnit = 'nanoseconds';
+	}
+
+	if (!options.outputFormat) {
+		options.outputFormat = 'long';
+	}
+
+	if (toLongUnit[options.upToUnit]) {
+		options.upToUnit = toLongUnit[options.upToUnit];
 	} else {
-		throw new TypeError(`Unknown unit : ${downToUnit} (known : ${toLongUnit.join(', ')}`);
+		throw new TypeError(`Unknown unit : ${options.upToUnit} (known : ${toShortUnit.join(', ')}, ${toLongUnit.join(', ')}`);
+	}
+
+	if (toLongUnit[options.downToUnit]) {
+		options.downToUnit = toLongUnit[options.downToUnit];
+	} else {
+		throw new TypeError(`Unknown unit : ${options.downToUnit} (known : ${toShortUnit.join(', ')}, ${toLongUnit.join(', ')}`);
 	}
 
 	let intPower = 0;
@@ -69,7 +81,7 @@ export default function parseMilliseconds(milliseconds, upToUnit = 'days', downT
 	const result = {};
 	let convertToThisUnit = false;
 	for (const u of factors) {
-		if (u.unit === upToUnit) {
+		if (u.unit === options.upToUnit) {
 			convertToThisUnit = true;
 		}
 
@@ -77,11 +89,11 @@ export default function parseMilliseconds(milliseconds, upToUnit = 'days', downT
 			continue;
 		}
 
-		if (u.unit === downToUnit) {
+		if (u.unit === options.downToUnit) {
 			result[u.unit] = Math.round(milliseconds / u.factor / (10 ** intPower));
-			fixRoundCascading(result, upToUnit);
+			fixRoundCascading(result, options.upToUnit);
 
-			return choosNameFormat(result, outputFormat);
+			return chooseNameFormat(result, options.outputFormat);
 		}
 
 		result[u.unit] = Math.trunc(milliseconds / u.factor / (10 ** intPower));
@@ -91,20 +103,24 @@ export default function parseMilliseconds(milliseconds, upToUnit = 'days', downT
 	}
 }
 
-function choosNameFormat(result, format = 'long') {
-	if (format === 'long') {
-		return result;
-	}
+function chooseNameFormat(result, format) {
+	switch (format) {
+		case 'long': {
+			return result;
+		}
 
-	if (format === 'short') {
-		return convertToShort(result);
-	}
+		case 'short': {
+			return convertToShort(result);
+		}
 
-	if (format === 'both') {
-		return {...convertToShort(result), ...result};
-	}
+		case 'both': {
+			return {...convertToShort(result), ...result};
+		}
 
-	throw new TypeError(`output format "${format}" unknown. Choose between "short", "long" or "both".`);
+		default: {
+			throw new TypeError(`output format "${format}" unknown. Choose between "short", "long" or "both".`);
+		}
+	}
 }
 
 function convertToShort(result) {
