@@ -1,4 +1,6 @@
 export type TimeComponentsLong = {
+	By?: number;
+	My?: number;
 	millennia?: number;
 	centuries?: number;
 	years?: number;
@@ -14,6 +16,8 @@ export type TimeComponentsLong = {
 	picoseconds?: number;
 };
 export type TimeComponentsShort = {
+	By?: number;
+	My?: number;
 	ky?: number;
 	c?: number;
 	Y?: number;
@@ -100,6 +104,8 @@ export enum TimeUnits {
 	microseconds = 'microseconds',
 	nanoseconds = 'nanoseconds',
 	picoseconds = 'picoseconds',
+	By = 'By',
+	My = 'My',
 	ky = 'ky',
 	c = 'c',
 	Y = 'Y',

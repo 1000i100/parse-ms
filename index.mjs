@@ -13,7 +13,9 @@ const factors = [
 	{shortUnit: 'M', unit: 'months', modulo: 12},
 	{shortUnit: 'Y', unit: 'years', modulo: 100},
 	{shortUnit: 'c', unit: 'centuries', modulo: 10},
-	{shortUnit: 'ky', unit: 'millennia', modulo: 999_999_999_999_999},
+	{shortUnit: 'ky', unit: 'millennia', modulo: 1000},
+	{shortUnit: 'My', unit: 'My', modulo: 1000},
+	{shortUnit: 'By', unit: 'By', modulo: 999_999_999_999_999},
 ];
 for (let i = 1; i < factors.length; i++) {
 	factors[i].factor = factors[i - 1].factor * factors[i - 1].modulo;

@@ -62,6 +62,17 @@ test('split days in bigger units if asked', t => {
 		hours: 4,
 		minutes: 30,
 	});
+	// Ideally : (2000 * 1000 * 1000 * 365.25 * 24 * 3600 * 1e3) - 1.007_006_008
+	// Should generate : {By: 1, My: 999, ky: 999, c: 9, Y: 99, M: 11, W: 4, D: 2, h: 10, m: 29, s: 59, ms: 998, µs: 992, ns: 993, ps: 992}
+	t.deepEqual(parseMilliseconds((2000 * 1000 * 1000 * 365.25 * 24 * 3600 * 1e3)-(7*24*3600 * 1e3),
+			{upToUnit: 'By', downToUnit: 'W', outputFormat: 'short'}),
+		{By: 1, My: 999, ky: 999, c: 9, Y: 99, M: 11, W: 3});
+	t.deepEqual(parseMilliseconds((2 * 24 * 3600 * 1e3)-1,
+			{upToUnit: 'D', downToUnit: 'µs', outputFormat: 'short'}),
+		{D: 1, h: 23, m: 59, s: 59, ms: 999, µs: 0});
+	t.deepEqual(parseMilliseconds(2000-0.000_000_005,
+			{upToUnit: 's', downToUnit: 'ps', outputFormat: 'short'}),
+		{s: 1, ms: 999, µs: 999, ns: 999, ps: 995});
 });
 test('up and down unit can be given in short format and so for output', t => {
 	t.deepEqual(parseMilliseconds(0.123_456_789, {upToUnit: 's', downToUnit: 's', outputFormat: 'short'}), {s: 0});
