@@ -58,11 +58,33 @@ parseMilliseconds(1337000001);
 // }
 ```
  */
-export default function parseMilliseconds(milliseconds: number, options?: ParseMillisecondsOptions): TimeComponents;
-export type ParseMillisecondsOptions = {
-	upToUnit?: TimeUnits;// Keyof typeof TimeUnits;
-	downToUnit?: TimeUnits;
-	outputFormat?: 'short' | 'long' | 'both';
+export default function parseMilliseconds(milliseconds: number, options?: Options): TimeComponents;
+export type Options = {
+	/**
+   The highest TimeUnit you want in your return object.
+   Can be a long string like 'days' or a short string like 'd'
+   See type TimeUnits for full list.
+
+   @default 'days'
+   */
+	readonly upToUnit?: TimeUnits;// Keyof typeof TimeUnits;
+	/**
+   The lowest TimeUnit you want in your return object.
+   Can be a long string like 'days' or a short string like 'd'
+   See type TimeUnits for full list.
+
+   @default 'nanoseconds'
+   */
+	readonly downToUnit?: TimeUnits;
+	/**
+   Choose parseMilliseconds return format with a string enum 'short' | 'long' | 'both' :
+   - with 'long', parseMilliseconds will return an object with 'long' keys {days, hours, minutes, seconds...}
+   - with 'short' it will return {d, h, m, s...}
+   - with 'both' it will return {d, days, h, hours...}
+
+   @default 'long'
+   */
+	readonly outputFormat?: 'short' | 'long' | 'both';
 };
 export enum TimeUnits {
 	millennia = 'millennia',

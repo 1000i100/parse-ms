@@ -43,15 +43,15 @@ testParseMilliseconds((1000 * 60) + 500 + 0.345_678, {
 	nanoseconds: 678,
 });
 
-test("downToUnit don't create artifacts", t => {
+test('downToUnit don\'t create artifacts', t => {
 	t.deepEqual(parseMilliseconds((60 * 60 * 1000) + (23 * 1000) + 433 + 0.123_456,
-			{downToUnit: 'picoseconds'}), {...zeroReference,
+		{downToUnit: 'picoseconds'}), {...zeroReference,
 		hours: 1,
 		seconds: 23,
 		milliseconds: 433,
 		microseconds: 123,
 		nanoseconds: 456,
-		picoseconds:0,
+		picoseconds: 0,
 	});
 });
 test('split days in bigger units if asked', t => {
