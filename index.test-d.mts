@@ -1,5 +1,5 @@
 import {expectType} from 'tsd';
-import parseMilliseconds, {type TimeComponents} from './index.js';
+import parseMilliseconds, {type TimeComponents} from './index.mjs';
 
 const components: TimeComponents = parseMilliseconds(3000);
 
