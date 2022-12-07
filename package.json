@@ -1,43 +1,44 @@
 {
-	"name": "parse-ms",
-	"version": "3.1.0",
-	"description": "Parse milliseconds into an object",
-	"license": "MIT",
-	"repository": "sindresorhus/parse-ms",
-	"funding": "https://github.com/sponsors/sindresorhus",
-	"author": {
-		"name": "Sindre Sorhus",
-		"email": "sindresorhus@gmail.com",
-		"url": "https://sindresorhus.com"
-	},
-	"type": "module",
-	"exports": "./index.mjs",
-	"engines": {
-		"node": ">=12"
-	},
-	"scripts": {
-		"test": "xo && ava && tsd"
-	},
-	"files": [
-	  "index.mjs",
-      "index.d.mts"
-	],
-	"keywords": [
-		"browser",
-		"parse",
-		"time",
-		"ms",
-		"milliseconds",
-		"microseconds",
-		"nanoseconds",
-		"duration",
-		"period",
-		"range",
-		"interval"
-	],
-	"devDependencies": {
-		"ava": "^5.1.0",
-		"tsd": "^0.25.0",
-		"xo": "^0.53.1"
-	}
+  "name": "parse-ms",
+  "version": "3.1.0",
+  "description": "Parse milliseconds into an object",
+  "license": "MIT",
+  "repository": "sindresorhus/parse-ms",
+  "funding": "https://github.com/sponsors/sindresorhus",
+  "author": {
+	"name": "Sindre Sorhus",
+	"email": "sindresorhus@gmail.com",
+	"url": "https://sindresorhus.com"
+  },
+  "type": "module",
+  "exports": "./index.mjs",
+  "types": "./index.d.mts",
+  "engines": {
+	"node": ">=12"
+  },
+  "scripts": {
+	"test": "xo && ava && tsd"
+  },
+  "files": [
+	"index.mjs",
+	"index.d.mts"
+  ],
+  "keywords": [
+	"browser",
+	"parse",
+	"time",
+	"ms",
+	"milliseconds",
+	"microseconds",
+	"nanoseconds",
+	"duration",
+	"period",
+	"range",
+	"interval"
+  ],
+  "devDependencies": {
+	"ava": "^5.1.0",
+	"tsd": "^0.25.0",
+	"xo": "^0.53.1"
+  }
 }
